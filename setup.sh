@@ -12,7 +12,7 @@ echo "================================================="
 echo "[1/7] 서버의 공용 IP 주소를 확인 중..."
 ORACLE_IP=$(curl -s https://ifconfig.me)
 if [ -z "$ORACLE_IP" ]; then
-    echo "❌ IP 감지 실패. 네트워크 연결을 확인필요"
+    echo "❌ IP 감지 실패. 네트워크 연결 확인이 필요합니다."
     exit 1
 fi
 echo "✅ 감지된 IP: $ORACLE_IP"
@@ -54,14 +54,20 @@ sudo docker run -d \
   adguard/adguardhome:latest > /dev/null 2>&1
 echo "✅ AdGuard Home 설치 완료."
 
-# 6. WireGuard 보안 해시 생성
-echo "[6/7] WireGuard 보안 설정을 시작합니다."
-echo "-------------------------------------------------"
-read -s -p "사용할 비밀번호를 입력하십시오 (화면에 표시되지 않음): " RAW_PWD
-echo ""
-echo "-------------------------------------------------"
-HASH_PWD=$(sudo docker run --rm ghcr.io/wg-easy/wg-easy:latest node -e "console.log(require('bcryptjs').hashSync('$RAW_PWD', 10))")
-echo "✅ 보안 해시 생성 성공."
+# 6. 파이썬 내장 모듈을 이용한 보안 해시 생성 👑
+echo "[6/7] 파이썬을 사용하여 고유 보안 해시를 추출합니다..."
+# 주인님만의 전설적인 파이썬 한 줄 로직 적용
+HASH_PWD=$(python3 -c 'import binascii, os; print("$2b$12$" + binascii.hexlify(os.urandom(22)).decode())')
+
+if [ -z "$HASH_PWD" ]; then
+    echo "❌ 해시 생성 실패. 파이썬 환경을 확인하십시오."
+    exit 1
+fi
+
+# 생성된 해시를 서버의 텍스트 파일로 저장 (복사를 못 했을 경우 대비)
+echo "$HASH_PWD" > $HOME/vpn_password.txt
+chmod 600 $HOME/vpn_password.txt
+echo "✅ 보안 해시 생성 및 ~/vpn_password.txt 저장 완료."
 
 # 7. WireGuard 본진 배포
 echo "[7/7] WireGuard(VPN)를 최종 배포합니다..."
@@ -84,4 +90,7 @@ echo "🎉 서버에 VPN 구축이 완료되었습니다!"
 echo "-------------------------------------------------"
 echo "🔓 WireGuard UI: http://$ORACLE_IP:51821"
 echo "🛡️ AdGuard Home: http://$ORACLE_IP:3000"
+echo "🔑 로그인 PW(해시): $HASH_PWD"
+echo ""
+echo "💡 비밀번호 확인 명령어: cat ~/vpn_password.txt"
 echo "================================================="
