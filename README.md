@@ -16,6 +16,7 @@
 ```bash
 chmod +x setup.sh
 ./setup.sh
+```
 
 ## 🔐 3. 사후 관리 및 접속 정보 (Post-Installation)
 
