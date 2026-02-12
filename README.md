@@ -144,7 +144,7 @@ sudo docker compose pull && docker compose up -d # 각 폴더에서
 
 ## 🔐 보안 & 팁
 
-설정 끝난 후 OCI Security List에서 포트 3000 삭제
-WireGuard UI 비밀번호: 12자 이상 + 특수문자
-서버 IP 절대 공개 금지!
-정기 업데이트: sudo apt update && sudo apt upgrade
+- 설정 끝난 후 OCI Security List에서 포트 3000 삭제
+- WireGuard UI 비밀번호: 12자 이상 + 특수문자
+- 서버 IP 절대 공개 금지!
+- 정기 업데이트: sudo apt update && sudo apt upgrade
