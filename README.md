@@ -130,7 +130,7 @@ nslookup doubleclick.net       # 0.0.0.0 또는 차단됨
 ### 🛡️ AdGuard Home 접속
 - **주소:** `http://<YOUR_ORACLE_IP>:3000`
 - **관리자 설정:** 최초 접속 시 본인만의 ID/PW를 생성해야 합니다.
-- 
+ 
 ### 🛰️ WireGuard 접속
 - **주소:** `http://<YOUR_ORACLE_IP>:51821`
 - **비밀번호:** `PASSWORD는 docker-compose.yml에서 설정한 값`
