@@ -5,8 +5,8 @@ services:
     image: ghcr.io/wg-easy/wg-easy:latest
     container_name: wg-easy
     environment:
-      - WG_HOST=YOUR_PUBLIC_IP_HERE             # ← 반드시 본인 OCI 공인 IP로 변경!
-      - PASSWORD=YourVeryStrongPassword123!     # ← UI 로그인 비밀번호 (강력하게 변경 필수)
+      - WG_HOST=YOUR_PUBLIC_IP_HERE             # 본인의 공인 IP
+      - PASSWORD=Your_Admin_Password            # 웹 UI(51821 포트) 접속 비밀번호
       - WG_DEFAULT_DNS=10.8.0.1                 # AdGuard Home 컨테이너 IP
       - WG_ALLOWED_IPS=0.0.0.0/0                # 모든 트래픽 VPN 경유
       - WG_MTU=1280                             # 사이트 접속 문제 핵심 해결
